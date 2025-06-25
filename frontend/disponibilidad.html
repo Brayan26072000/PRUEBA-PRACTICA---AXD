@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados de Disponibilidad</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            padding: 40px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin: 30px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2980b9;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #dfe6e9;
+        }
+
+        .no-results {
+            text-align: center;
+            font-size: 18px;
+            color: #c0392b;
+            margin-top: 30px;
+        }
+
+        .back-link {
+            display: block;
+            width: 100px;
+            margin: 30px auto;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: #2980b9;
+        }
+
+        form input[type="date"] {
+            margin-bottom: 5px;
+        }
+
+        form button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #1e8449;
+        }
+    </style>
+</head>
+<body>
+    <h2>Habitaciones Disponibles</h2>
+
+    {% if resultados %}
+        <table>
+            <tr>
+                <th>Hotel</th>
+                <th>Tipo de habitación</th>
+                <th>Capacidad</th>
+                <th>Reservar</th> 
+            </tr>
+            {% for item in resultados %}
+            <tr>
+                <td>{{ item.hotel }}</td>
+                <td>{{ item.tipo | capitalize }}</td>
+                <td>{{ item.capacidad }}</td>
+                <td>
+                    <form method="POST" action="/reservar">
+                        <input type="hidden" name="habitacion_id" value="{{ item.id }}">
+                        <input type="hidden" name="fecha_inicio" value="{{ fecha_inicio }}">
+                        <input type="hidden" name="fecha_fin" value="{{ fecha_fin }}">
+                        <button type="submit">Reservar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="no-results">No se encontraron habitaciones disponibles para los filtros seleccionados.</p>
+    {% endif %}
+
+    <a href="/" class="back-link">← Volver</a>
+</body>
+</html>

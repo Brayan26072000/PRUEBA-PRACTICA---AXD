@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado de Tarifa</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f6fa;
+            padding: 40px;
+            text-align: center;
+        }
+        .result {
+            background: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .result h2 {
+            color: #2c3e50;
+        }
+        .result p {
+            font-size: 20px;
+            color: #27ae60;
+            margin-top: 20px;
+        }
+        .error {
+            color: #c0392b;
+            font-size: 18px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="result">
+        <h2>Resultado</h2>
+        {% if total %}
+            <p>La tarifa total es: <strong>${{ total }}</strong></p>
+        {% elif error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <a href="/tarifa">← Calcular otra tarifa</a>
+    </div>
+</body>
+</html>
